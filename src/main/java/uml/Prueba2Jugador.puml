@@ -1,0 +1,98 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class JugadorBaloncesto{
+
+    - nombre: String
+    - apellido: String
+    - fechaNacimiento: LocalDate
+    - posicion: String
+    - altura: double
+    - equipoActual: String
+    - estadisticasJugador: Map<String, Integer>
+
+    }
+class EstadisticasJugador {
+
+    - partidosJugados: int
+    - minutosJugados: int
+    - puntosPorPartido: int
+    - numCanastas: int
+    - numTirosLibres: int
+    - numTriples: int
+    - numRebotes: int
+    - numAsistencias: int
+
+}
+
+class Partido {
+
+    - fecha: LocalDate
+    - equipoLocal: String
+    - equipoVisitante: String
+    - arbitro: String
+    - puntosLocal: int
+    - puntosVisitante: int
+    - asistencias: List<String>
+
+}
+class EstadisticasPartido {
+
+    - minutosJugados: int
+    - puntosPorPartido: int
+    - rebotesPorPartido: int
+    - asistenciasPorPartido: int
+
+}
+
+class Equipo {
+
+    - nombre: String
+    - ciudad: String
+    - pais: String
+    - fechaFundacion: LocalDate
+    - numJugadores: int
+    - entrenador: String
+    - patrocinador: String
+
+    }
+class EstadisticaEquipo {
+
+    - numPartidosJugados: int
+    - numCanastas: int
+    - numRebotes: int
+    - numAsistencias: int
+
+}
+
+class Liga {
+
+   - nombre: String
+   - pais: String
+   - fechaInicio: LocalDate
+   - fechaFin: LocalDate
+   - listaEquipos: List<String>
+   - listaPartidos: List<Partido>
+
+}
+
+JugadorBaloncesto --> Equipo
+JugadorBaloncesto "1.*" --* "0.*" EstadisticasPartido
+JugadorBaloncesto "1" --o "0.*" EstadisticasJugador
+
+Equipo "1.*" --* "0.*" JugadorBaloncesto
+Equipo "1.*" --* "0.*" Partido
+Equipo  --> Liga
+Equipo --> EstadisticaEquipo
+
+Partido --> EquipoLocal
+Partido --> EquipoVisitante
+Partido "1.*" --* "0.*" EstadisticasPartido
+
+Liga  "1.*" --* "0.*" Equipo
+Liga "1.*" --* "0.*" Partido
+
+EstadisticasPartido "1" --> "0.*" JugadorBaloncesto
+EstadisticasPartido "1" --> "0.*" Partido
+
+@enduml

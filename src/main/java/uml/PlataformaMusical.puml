@@ -1,0 +1,60 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class Cancion{
+    - duracion : float
+    - nombreCancion : String
+    - letra : String
+}
+
+class Album{
+    - titulo : String
+    - fechaLanzamiento : LocalDate
+    - numeroCanciones : int
+    - duracionTotal : double
+    - caratula : String
+}
+
+class PlayList{
+    + nombreCancion : String
+    - esPublica : boolean
+}
+
+class Genero{
+    - nombre : String
+}
+
+class Artista{
+    - nombre : String
+    - fechaNacimiento : LocalDate
+    - paisOrigen : String
+    - numeroAlbumes : int
+    - numeroCanciones : int
+    - biografia : String
+}
+class ProductoraMusical{
+    - nombre : String
+}
+
+Cancion --> PlayList
+Cancion --> ProductoraMusical
+Cancion "1.*" --> "0.*" Genero
+Cancion "0.*" --o "0.*" PlayList
+Cancion "1.*" --* "0.*" Album
+
+Artista --> Album
+Artista --> Cancion
+Artista --> ProductoraMusical
+
+Album --> ProductoraMusical
+Album "1.*" --* "0.*" Cancion
+
+PlayList "0.*" --o "0.*" Cancion
+
+Genero "1.*" --* "0.*" Cancion
+
+ProductoraMusical "1.*" --* "0.*" Artista
+ProductoraMusical "1.*" --* "0.*" Album
+ProductoraMusical "1.*" --* "0.*" Cancion
+
+@enduml
